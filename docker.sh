@@ -20,4 +20,7 @@ add-apt-repository \
    stable"
    
 apt-get update
-apt-get install docker-ce 
+apt-get install docker-ce
+
+docker build -t "tatooine" .
+docker run -it -p 80:80 -p 443:443 tatooine
