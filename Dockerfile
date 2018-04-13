@@ -2,10 +2,7 @@ FROM ubuntu:14.04
 
 ENV LANG C.UTF-8
 
-RUN apt-get update; apt-get install -y \
-	apache2 \
- 	openssl \
-	git
+RUN apt-get update; apt-get install -y apache2 openssl git
 
 RUN rm -rf /var/www/html/*; rm -rf /etc/apache2/sites-enabled/*; \
     mkdir -p /etc/apache2/external
@@ -26,7 +23,6 @@ ADD 001-default-ssl.conf /etc/apache2/sites-enabled/001-default-ssl.conf
 
 EXPOSE 443
 
-RUN apt-get install git
 RUN ssh-keygen -A
 WORKDIR /git-server/
 RUN mkdir /git-server/keys && adduser -D -s /usr/bin/git-shell git \

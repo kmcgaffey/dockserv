@@ -16,7 +16,7 @@ add-apt-repository \
    stable"
 
 apt-get update
-apt-get install docker-ce
+apt-get install docker-ce docker-compose
 
 yes "" | ssh-keygen -t rsa -b 4096 -N "" -f git.key
 
