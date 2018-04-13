@@ -18,11 +18,11 @@ add-apt-repository \
 apt-get update
 apt-get install docker-ce docker-compose
 
-yes "" | ssh-keygen -t rsa -b 4096 -N "" -f admin.key
+adduser admin --gecos "obi wan,1337,mitichlorians,phonehome" --disabled-password
+echo "admin:empiredidnothingwrong" | sudo chpasswd
+su - admin -c yes "" | ssh-keygen -t rsa -b 4096 -N "" -f admin.key
 
-docker run -d \
--p 80:80 -p 443:443 \
--v $EXT_DIR:/etc/apache2/external/ \
-marvambass/apache2-ssl-secure
+docker build -t tatooine .
+docker run -d -p 80:80 -p 443:443 -p 22:22 -v $EXT_DIR:/etc/apache2/external/ tatooine
 
 #docker exec -it container_name bash

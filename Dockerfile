@@ -27,17 +27,21 @@ ADD admin.key.pub /admin.key.pub
 RUN chmod a+r /admin.key.pub
 RUN adduser admin --gecos "obi wan,1337,mitichlorians,phonehome" --disabled-password
 RUN echo "admin:empiredidnothingwrong" | sudo chpasswd
-RUN su - admin $ mkdir .ssh && chmod 700 .ssh $ touch .ssh/authorized_keys $ chmod 600 .ssh/authorized_keys
-RUN cat /admin.key.pub >> \ /home/admin/.ssh/authorized_keys
-RUN su
+RUN mkdir -p "/home/admin/.ssh"
+RUN chmod 700 /home/admin/.ssh
+RUN touch /home/admin/.ssh/authorized_keys
+RUN chmod 600 /home/admin/.ssh/authorized_keys
+RUN chmod -R +777 /home/admin
+RUN cat /admin.key.pub >> /home/admin/.ssh/authorized_keys
+RUN su 
 RUN grep git-shell /etc/shells || su -c \ "echo `which git-shell` >> /etc/shells" # su -c 'usermod -s git-shell admin'
 RUN usermod -a -G admin root
 RUN git init --bare /opt/admin.git
 RUN chown -R admin:admin /opt/admin.git
 RUN chmod -R 770 /opt/admin.git
 
-ADD post-push /opt/admin/.git/hooks/post-push
-RUN chmod +771 /opt/admin/.git/hooks/post-push
+ADD post-push /opt/admin.git/.git/hooks/post-push
+RUN chmod +771 /opt/admin.git/.git/hooks/post-push
 
 EXPOSE 22
 
