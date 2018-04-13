@@ -11,7 +11,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/apache2/ssl
 
 RUN rm /etc/apache2/sites-available/default-ssl.conf
 
-ADD 000-default-ssl.conf /etc/apache2/sites-available/000-default-ssl.conf
+ADD default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
 RUN a2ensite default-ssl.conf
 RUN service apache2 restart
