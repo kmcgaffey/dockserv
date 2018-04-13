@@ -6,7 +6,6 @@ apt-get update
 	ca-certificates \ 
 	curl \ 
 	apt-get install software-properties-common \
-	sudo add-apt-repository \
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
