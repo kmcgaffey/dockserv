@@ -27,16 +27,25 @@ ADD 001-default-ssl.conf /etc/apache2/sites-enabled/001-default-ssl.conf
 EXPOSE 443
 
 RUN apt-get install git
-RUN useradd -m -p empiredidnothingwrong git
-RUN useradd -m -p empiredidnothingwrong admin
-RUN mkdir /var/git/
-RUN cd /var/git/
-RUN git init --bare admin.git
-ADD git.key.pub /var/git/git.key.pub
+RUN ssh-keygen -A
+WORKDIR /git-server/
+RUN mkdir /git-server/keys && adduser -D -s /usr/bin/git-shell git \
+	&& echo git:empiredidnothingwrong | chpasswd && mkdir /home/git/.ssh
+COPY git-shell-commands /home/git/git-shell-commands
+COPY sshd_config /etc/ssh/sshd_config
+COPY start.sh start.sh
 
-RUN cat /var/git/publickey.pub >> ~/.ssh/authorized_keys
-RUN eval "$(ssh-agent -s)"
-RUN ssh-add ~./ssh/authorized_keys
+EXPOSE 22
+
+CMD ["sh", "start.sh"]
+
+#RUN cd /var/git/
+#RUN git init --bare admin.git
+#ADD git.key.pub /var/git/git.key.pub
+
+#RUN cat /var/git/publickey.pub >> ~/.ssh/authorized_keys
+#RUN eval "$(ssh-agent -s)"
+#RUN ssh-add ~./ssh/authorized_keys
 
 ADD entrypoint.sh /opt/entrypoint.sh
 RUN chmod a+x /opt/entrypoint.sh
