@@ -18,11 +18,11 @@ add-apt-repository \
 apt-get update
 apt-get install docker-ce docker-compose
 
-yes "" | ssh-keygen -t rsa -b 4096 -N "" -f git.key
+yes "" | ssh-keygen -t rsa -b 4096 -N "" -f admin.key
 
 docker run -d \
 -p 80:80 -p 443:443 \
 -v $EXT_DIR:/etc/apache2/external/ \
 marvambass/apache2-ssl-secure
 
-git clone admin@localhost:/etc/git/admin.git
+#docker exec -it container_name bash

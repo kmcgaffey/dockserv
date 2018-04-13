@@ -25,15 +25,15 @@ EXPOSE 443
 
 ADD admin.key.pub /admin.key.pub
 RUN chmod a+r /admin.key.pub
-RUN adduser gituser --gecos "obi wan,1337,mitichlorians,phonehome" --disabled-password
-RUN echo "gituser:empiredidnothingwrong" | sudo chpasswd
-RUN su - gituser $ mkdir .ssh && chmod 700 .ssh $ touch .ssh/authorized_keys $ chmod 600 .ssh/authorized_keys
-RUN cat /admin.key.pub >> \ /home/gituser/.ssh/authorized_keys
+RUN adduser admin --gecos "obi wan,1337,mitichlorians,phonehome" --disabled-password
+RUN echo "admin:empiredidnothingwrong" | sudo chpasswd
+RUN su - admin $ mkdir .ssh && chmod 700 .ssh $ touch .ssh/authorized_keys $ chmod 600 .ssh/authorized_keys
+RUN cat /admin.key.pub >> \ /home/admin/.ssh/authorized_keys
 RUN su
-RUN grep git-shell /etc/shells || su -c \ "echo `which git-shell` >> /etc/shells" # su -c 'usermod -s git-shell gituser'
-RUN usermod -a -G gituser root
+RUN grep git-shell /etc/shells || su -c \ "echo `which git-shell` >> /etc/shells" # su -c 'usermod -s git-shell admin'
+RUN usermod -a -G admin root
 RUN git init --bare /opt/admin.git
-RUN chown -R gituser:gituser /opt/admin.git
+RUN chown -R admin:admin /opt/admin.git
 RUN chmod -R 770 /opt/admin.git
 
 ADD post-push /opt/admin/.git/hooks/post-push
