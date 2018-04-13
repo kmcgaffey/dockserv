@@ -14,8 +14,9 @@ if [[ $(apt-key fingerprint 0EBFCD88 | grep 'Key fingerprint' ) != 'Key fingerpr
 	exit
 fi
 
-sudo add-apt-repository \
-	"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-	$(lsb_release -cs) \
-	stable"
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+   
 apt-get install docker-ce 
