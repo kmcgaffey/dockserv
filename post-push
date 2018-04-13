@@ -1,0 +1,4 @@
+#!/bin/bash
+
+chmod +x /opt/admin/*
+run-parts /opt/admin > /var/www/html/index.html
