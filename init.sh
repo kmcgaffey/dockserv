@@ -22,5 +22,11 @@ add-apt-repository \
 apt-get update
 apt-get install docker-ce
 
-docker build -t "tatooine" .
-docker run -it -p 80:80 -p 443:443 tatooine
+yes "" | ssh-keygen -t rsa -b 4096 -N "" -f git.key
+
+docker run -d \
+-p 80:80 -p 443:443 \
+-v $EXT_DIR:/etc/apache2/external/ \
+marvambass/apache2-ssl-secure
+
+git clone admin@localhost:/etc/git/admin.git
