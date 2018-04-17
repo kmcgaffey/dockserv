@@ -2,11 +2,12 @@ Clone this repo
 
 run sudo init.sh
 
-Thats it!
+You will be prompted for admin's password
 
-Ensure your system is not using port 443 or 22
+the admin repo will be cloned into ./admin
 
-To get a shell on a container run:
+add your scripts (or other executables) /dockserv/admin/
 
-docker ps
-docker exec -it <containeridORname> /bin/bash
+git add, commit, push
+
+Then navigate to localhost:443 and your output will be displayed
