@@ -41,13 +41,15 @@ RUN cat /admin.key.pub >> /home/admin/.ssh/authorized_keys
 RUN usermod -a -G admin root
 RUN git init --bare /opt/admin.git
 RUN git clone /opt/admin.git /opt/admin
+RUN chown -R admin:admin /opt/admin.git
 RUN chown -R admin:admin /opt/admin
 RUN chmod -R 770 /opt/admin
-RUN chown admin:admin /var/www/html/index.html
 
 ADD post-receive /opt/admin.git/hooks/post-receive
 RUN chmod +777 /opt/admin.git/hooks/post-receive
 RUN echo "No scripts run yet" > /var/www/html/index.html
+RUN chown admin:admin /var/www/html/index.html
+RUN chmod +777 /var/www/html
 
 EXPOSE 22
 

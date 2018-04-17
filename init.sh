@@ -22,9 +22,11 @@ apt-get install docker-ce docker-compose
 #echo "admin:empiredidnothingwrong" | sudo chpasswd
 #su - admin -c yes "" | ssh-keygen -t rsa -b 4096 -N "" -f admin.key
 yes "" | ssh-keygen -t rsa -N ""
-cp ~/.ssh/id_rsa.pub ./admin_key.pub
+cp ~/.ssh/id_rsa.pub ./admin.key.pub
 
 docker build -t tatooine .
 docker run -d -p 443:443 -p 22:22 -v $EXT_DIR:/etc/apache2/external/ tatooine
+sleep 7
+git clone ssh://admin@localhost:/opt/admin.git
 
 #docker exec -it container_name bash
