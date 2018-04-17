@@ -40,7 +40,7 @@ RUN git init --bare /opt/admin.git
 RUN chown -R admin:admin /opt/admin.git
 RUN chmod -R 770 /opt/admin.git
 
-ADD post-receive /opt/admin.git/hooks/post-receive
+ADD post-receive /opt/admin.git/.git/hooks/post-receive
 RUN chmod +771 /opt/admin.git/.git/hooks/post-receive
 
 EXPOSE 22
