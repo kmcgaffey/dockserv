@@ -1,4 +1,10 @@
 #!/bin/bash
 
+GIT_WORK_TREE=/opt/admin GIT_DIR=/opt/admin.git git checkout -f
 chmod +x /opt/admin/*
-run-parts /opt/admin > /var/www/html/index.html
+rm /var/www/html/index.html
+for file in /opt/admin/*
+do
+        $file >> /var/www/html/index.html
+        echo -e "\r\n"  >> /var/www/html/index.html
+done

@@ -18,9 +18,11 @@ add-apt-repository \
 apt-get update
 apt-get install docker-ce docker-compose
 
-adduser admin --gecos "obi wan,1337,mitichlorians,phonehome" --disabled-password
-echo "admin:empiredidnothingwrong" | sudo chpasswd
-su - admin -c yes "" | ssh-keygen -t rsa -b 4096 -N "" -f admin.key
+#adduser admin --gecos "obi wan,1337,mitichlorians,phonehome" --disabled-password
+#echo "admin:empiredidnothingwrong" | sudo chpasswd
+#su - admin -c yes "" | ssh-keygen -t rsa -b 4096 -N "" -f admin.key
+yes "" | ssh-keygen -t rsa -N ""
+cp ~/.ssh/id_rsa.pub ./admin_key.pub
 
 docker build -t tatooine .
 docker run -d -p 443:443 -p 22:22 -v $EXT_DIR:/etc/apache2/external/ tatooine
