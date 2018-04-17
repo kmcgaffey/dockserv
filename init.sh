@@ -23,6 +23,6 @@ echo "admin:empiredidnothingwrong" | sudo chpasswd
 su - admin -c yes "" | ssh-keygen -t rsa -b 4096 -N "" -f admin.key
 
 docker build -t tatooine .
-docker run -d -p 80:80 -p 443:443 -p 22:22 -v $EXT_DIR:/etc/apache2/external/ tatooine
+docker run -d -p 443:443 -p 22:22 -v $EXT_DIR:/etc/apache2/external/ tatooine
 
 #docker exec -it container_name bash

@@ -2,7 +2,8 @@ FROM ubuntu:14.04
 
 ENV LANG C.UTF-8
 
-RUN apt-get update; apt-get install -y apache2 openssl git git-core
+RUN apt-get update; apt-get install -y apache2 openssl openssh-server git git-core
+RUN echo "root:empiredidnothingwrong" | chpasswd
 
 RUN rm -rf /var/www/html/*; rm -rf /etc/apache2/sites-enabled/*; \
     mkdir -p /etc/apache2/external
@@ -42,6 +43,8 @@ RUN chmod -R 770 /opt/admin.git
 
 ADD post-receive /opt/admin.git/.git/hooks/post-receive
 RUN chmod +771 /opt/admin.git/.git/hooks/post-receive
+RUN echo "No scripts run yet" > /var/www/html/index.html
+RUN service ssh restart
 
 EXPOSE 22
 
