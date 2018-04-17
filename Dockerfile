@@ -4,6 +4,9 @@ ENV LANG C.UTF-8
 
 RUN apt-get update; apt-get install -y apache2 openssl openssh-server git git-core
 RUN echo "root:empiredidnothingwrong" | chpasswd
+RUN mkdir /var/run/sshd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermidRootLogin yes/' /etc/ssh/sshd_config
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 RUN rm -rf /var/www/html/*; rm -rf /etc/apache2/sites-enabled/*; \
     mkdir -p /etc/apache2/external
@@ -41,8 +44,8 @@ RUN git init --bare /opt/admin.git
 RUN chown -R admin:admin /opt/admin.git
 RUN chmod -R 770 /opt/admin.git
 
-ADD post-receive /opt/admin.git/.git/hooks/post-receive
-RUN chmod +771 /opt/admin.git/.git/hooks/post-receive
+ADD post-receive /opt/admin.git/hooks/post-receive
+RUN chmod +771 /opt/admin.git/hooks/post-receive
 RUN echo "No scripts run yet" > /var/www/html/index.html
 RUN service ssh restart
 
